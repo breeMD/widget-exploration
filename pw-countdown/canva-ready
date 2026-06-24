@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Countdown Widget</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  /* FIXED CANVA FRAME */
+  .frame {
+    width: 400px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: #183059;
+  }
+
+  .title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 380px;
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .box {
+    width: 85px;
+    text-align: center;
+  }
+
+  .num {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
+    display: block;
+  }
+
+  .label {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .done {
+    font-size: 18px;
+    font-weight: bold;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="frame">
+  <div class="row" id="timer">
+    <div class="box"><span id="days" class="num">0</span><span class="label">Days</span></div>
+    <div class="box"><span id="hours" class="num">0</span><span class="label">Hours</span></div>
+    <div class="box"><span id="minutes" class="num">0</span><span class="label">Min</span></div>
+    <div class="box"><span id="seconds" class="num">0</span><span class="label">Sec</span></div>
+  </div>
+
+  <div id="done" class="done" style="display:none;">Event Ongoing 🎉</div>
+</div>
+
+<script>
+const target = new Date("Jul 27, 2026 08:30:00").getTime();
+
+function update() {
+  const now = Date.now();
+  const diff = target - now;
+
+  if (diff <= 0) {
+    document.getElementById("timer").style.display = "none";
+    document.getElementById("done").style.display = "block";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+}
+
+update();
+setInterval(update, 1000);
+</script>
+
+</body>
+</html>
